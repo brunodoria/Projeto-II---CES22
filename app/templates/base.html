@@ -1,10 +1,15 @@
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,
+        initial-scale=1, shrink-to-fit=no">
         {% if title %}
         <title>{{ title }} - DOCTOR PLANNING</title>
         {% else %}
         <title>Seja bem vindo ao Doctor Planning!</title>
         {% endif %}
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     </head>
     <body>
         <hr>
