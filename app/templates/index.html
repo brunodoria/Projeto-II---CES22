@@ -1,6 +1,15 @@
+{#importar do arquivo base.html o cabeçalho#}
 {% extends "base.html" %}
 
+{# Incluir a parte especifica do codigo#}
 {% block content %}
-    <h1>Seja bem vindo ao Doctor Planning!</h1>
-    <div><p>Faça seu login para agendar sua consulta!</b></p></div>
+    <h1>Ola, {{ user.username }}!</h1>
+
+    {# Caso tenhamos interesse em colocar algum post!! #}
+    {# mas creio que nao e o caso, deixei aqui para ter ideia#}
+    {% for post in posts %}
+    <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
+    {% endfor %}
+
+
 {% endblock %}
