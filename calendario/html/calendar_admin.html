@@ -5,59 +5,38 @@
 angular.module('myApp', [])
 .controller('myCtrl', ['$scope', function($scope) {
     $scope.today = new Date();
-    $scope.name = "";
+    $scope.name = "admin";
     $scope.values_1 = [];
+    $scope.especialidades = ["Cardiologista", "Oftalmologista", "Dermatologista","Dermatologista", "Neurologista"];
+    $scope.users = ["user1", "user2", "user3", "user4", "user5"];
     $scope.value1 = 0;
     $scope.value2 = 0;
     $scope.count = 0;
+    $scope.bool = 1;
     $scope.selectedType = "";
-    $scope.name = "";
     $scope.myFunc = function() {
-        $scope.count++;
-        alert("INFO: ");
+        $scope.count++
     };
-    $scope.types = ["Neurologista", "Cardiologista", "Oftalmologista", "Dermatologista"];
-    $scope.mySub = function() {
-        alert("Requerimento enviado!");
+    $scope.clear = function() {
+        alert("Calendário reinicializado.");
+        $scope.bool = 0;
     };
+}])
 
-}])</script>
+</script>
 <body ng-app='myApp' ng-controller='myCtrl'>
 
 <div>
 
-<p>Input something in the input box:</p>
-<p>Name : <input type="text" ng-model="name" placeholder="Enter name here"></p>
-<h1>Hello {{name}} + {{count}}</h1>
+<h1>Doctor Planning</h1>
+<h2>Bem vindo, administrador {{name}}.</h2>
 
-<p>Escolha a especialidade desejada:</p>
-<select ng-model="selectedType" ng-options="x for x in types">
-</select>
-
-<p>Escolha o dia da semana:</p>
-<select ng-model="value1">
-<option value="1">Segunda</option>
-<option value="2">Ter&ccedila</option>
-<option value="3">Quarta</option>
-<option value="4">Quinta</option>
-<option value="5">Sexta</option>
-</select>
-
-<p>Escolha o hor&aacuterio:</p>
-<select ng-model="value2">
-<option value="1">9:00</option>
-<option value="2">10:00</option>
-<option value="3">11:00</option>
-<option value="4">13:00</option>
-<option value="5">14:00</option>
-<option value="6">15:00</option>
-<option value="7">16:00</option>
-</select>
+<p>A atual agenda da semana é:</p>
 
 </div>
 
 <br/>
-<link rel="stylesheet" type="text/css" href="../styles/calendar.css">
+<link rel="stylesheet" type="text/css" href="calendar.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <table>
   <thead>
@@ -89,26 +68,27 @@ angular.module('myApp', [])
       <td class="hour" rowspan="1"><span>9:00</span></td>
       <td ng-class="{'selected': value1 == 1 && value2 == 1}" ng-click="myFunc()">
          <div ng-if="value1 == 1 && value2 == 1">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 2 && value2 == 1}" ng-click="myFunc()">
          <div ng-if="value1 == 2 && value2 == 1">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 3 && value2 == 1}" ng-click="myFunc()">
        <div ng-if="value1 == 3 && value2 == 1">
-         {{selectedType}}
+
         </div> </td>
-      <td ng-class="{'selected': value1 == 4 && value2 == 1}" ng-click="myFunc()">
-        <div ng-if="value1 == 4 && value2 == 1">
-         {{selectedType}}
+      <td ng-class="{selected: bool == 1}" ng-click="myFunc()">
+        <div ng-if="bool == 1">
+            {{especialidades[0]}} </br>
+            {{users[0]}}
         </div>
       </td>
       <td ng-class="{'selected': value1 == 5 && value2 == 1}" ng-click="myFunc()">
          <div ng-if="value1 == 5 && value2 == 1">
-         {{selectedType}}
+
         </div>
       </td>
     </tr>
@@ -116,53 +96,55 @@ angular.module('myApp', [])
       <td class="hour" rowspan="1"><span>10:00</span></td>
       <td ng-class="{'selected': value1 == 1 && value2 == 2}" ng-click="myFunc()">
          <div ng-if="value1 == 1 && value2 == 2">
-         {{selectedType}}
+
         </div>
       </td>
-      <td ng-class="{'selected': value1 == 2 && value2 == 2}" ng-click="myFunc()">
-         <div ng-if="value1 == 2 && value2 == 2">
-         {{selectedType}}
+      <td ng-class="{selected: bool == 1}" ng-click="myFunc()">
+        <div ng-if="bool == 1">
+            {{especialidades[1]}} </br>
+            {{users[1]}}
         </div>
       </td>
       <td ng-class="{'selected': value1 == 3 && value2 == 2}" ng-click="myFunc()">
        <div ng-if="value1 == 3 && value2 == 2">
-         {{selectedType}}
+
         </div> </td>
       <td ng-class="{'selected': value1 == 4 && value2 == 2}" ng-click="myFunc()">
         <div ng-if="value1 == 4 && value2 == 2">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 5 && value2 == 2}" ng-click="myFunc()">
          <div ng-if="value1 == 5 && value2 == 2">
-         {{selectedType}}
+
         </div>
       </td>
     </tr>
     <tr>
       <td class="hour" rowspan="1"><span>11:00</span></td>
-      <td ng-class="{'selected': value1 == 1 && value2 == 3}" ng-click="myFunc()">
-         <div ng-if="value1 == 1 && value2 == 3">
-         {{selectedType}}
+      <td ng-class="{selected: bool == 1}" ng-click="myFunc()">
+        <div ng-if="bool == 1">
+           {{especialidades[2]}} </br>
+           {{users[2]}}
         </div>
       </td>
       <td ng-class="{'selected': value1 == 2 && value2 == 3}" ng-click="myFunc()">
          <div ng-if="value1 == 2 && value2 == 3">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 3 && value2 == 3}" ng-click="myFunc()">
        <div ng-if="value1 == 3 && value2 == 3">
-         {{selectedType}}
+
         </div> </td>
       <td ng-class="{'selected': value1 == 4 && value2 == 3}" ng-click="myFunc()">
         <div ng-if="value1 == 4 && value2 == 3">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 5 && value2 == 3}" ng-click="myFunc()">
          <div ng-if="value1 == 5 && value2 == 3">
-         {{selectedType}}
+
         </div>
       </td>
     </tr>
@@ -178,53 +160,55 @@ angular.module('myApp', [])
       <td class="hour" rowspan="1"><span>13:00</span></td>
       <td ng-class="{'selected': value1 == 1 && value2 == 4}" ng-click="myFunc()">
          <div ng-if="value1 == 1 && value2 == 4">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 2 && value2 == 4}" ng-click="myFunc()">
          <div ng-if="value1 == 2 && value2 == 4">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 3 && value2 == 4}" ng-click="myFunc()">
        <div ng-if="value1 == 3 && value2 == 4">
-         {{selectedType}}
+
         </div> </td>
       <td ng-class="{'selected': value1 == 4 && value2 == 4}" ng-click="myFunc()">
         <div ng-if="value1 == 4 && value2 == 4">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 5 && value2 == 4}" ng-click="myFunc()">
          <div ng-if="value1 == 5 && value2 == 4">
-         {{selectedType}}
+
         </div>
       </td>
     </tr>
     <tr>
       <td class="hour" rowspan="1"><span>14:00</span></td>
-      <td class="used" ng-click="myFunc()">
-         <div ng-if="value1 == 1 && value2 == 5">
-         {{selectedType}}
+      <td ng-class="{selected: bool == 1}" ng-click="myFunc()">
+        <div ng-if="bool == 1">
+           {{especialidades[3]}} </br>
+           {{users[3]}}
         </div>
       </td>
       <td ng-class="{'selected': value1 == 2 && value2 == 5}" ng-click="myFunc()">
          <div ng-if="value1 == 2 && value2 == 5">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 3 && value2 == 5}" ng-click="myFunc()">
        <div ng-if="value1 == 3 && value2 == 5">
-         {{selectedType}}
+
         </div> </td>
       <td ng-class="{'selected': value1 == 4 && value2 == 5}" ng-click="myFunc()">
         <div ng-if="value1 == 4 && value2 == 5">
-         {{selectedType}}
+
         </div>
       </td>
-      <td ng-class="{'selected': value1 == 5 && value2 == 5}" ng-click="myFunc()">
-         <div ng-if="value1 == 5 && value2 == 5">
-         {{selectedType}}
+      <td ng-class="{selected: bool == 1}" ng-click="myFunc()">
+        <div ng-if="bool == 1">
+           {{especialidades[4]}} </br>
+           {{users[4]}}
         </div>
       </td>
     </tr>
@@ -232,26 +216,26 @@ angular.module('myApp', [])
       <td class="hour" rowspan="1"><span>15:00</span></td>
       <td ng-class="{'selected': value1 == 1 && value2 == 6}" ng-click="myFunc()">
          <div ng-if="value1 == 1 && value2 == 6">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 2 && value2 == 6}" ng-click="myFunc()">
          <div ng-if="value1 == 2 && value2 == 6">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 3 && value2 == 6}" ng-click="myFunc()">
        <div ng-if="value1 == 3 && value2 == 6">
-         {{selectedType}}
+
         </div> </td>
       <td ng-class="{'selected': value1 == 4 && value2 == 6}" ng-click="myFunc()">
         <div ng-if="value1 == 4 && value2 == 6">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 5 && value2 == 6}" ng-click="myFunc()">
          <div ng-if="value1 == 5 && value2 == 6">
-         {{selectedType}}
+
         </div>
       </td>
     </tr>
@@ -259,33 +243,33 @@ angular.module('myApp', [])
       <td class="hour" rowspan="1"><span>16:00</span></td>
       <td ng-class="{'selected': value1 == 1 && value2 == 7}" ng-click="myFunc()">
          <div ng-if="value1 == 1 && value2 == 7">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 2 && value2 == 7}" ng-click="myFunc()">
          <div ng-if="value1 == 2 && value2 == 7">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 3 && value2 == 7}" ng-click="myFunc()">
        <div ng-if="value1 == 3 && value2 == 7">
-         {{selectedType}}
+
         </div> </td>
       <td ng-class="{'selected': value1 == 4 && value2 == 7}" ng-click="myFunc()">
         <div ng-if="value1 == 4 && value2 == 7">
-         {{selectedType}}
+
         </div>
       </td>
       <td ng-class="{'selected': value1 == 5 && value2 == 7}" ng-click="myFunc()">
          <div ng-if="value1 == 5 && value2 == 7">
-         {{selectedType}}
+
         </div>
       </td>
     </tr>
   </tbody>
 </table>
 
-<button ng-click="mySub()"> Submit </button>
+<button ng-click="clear()"> Excluir todas as consultas? </button>
 
 </body>
 </html>

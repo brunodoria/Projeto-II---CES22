@@ -5,30 +5,32 @@
 angular.module('myApp', [])
 .controller('myCtrl', ['$scope', function($scope) {
     $scope.today = new Date();
-    $scope.name = "";
+    $scope.name = "user1";
     $scope.values_1 = [];
     $scope.value1 = 0;
     $scope.value2 = 0;
     $scope.count = 0;
     $scope.selectedType = "";
-    $scope.name = "";
     $scope.myFunc = function() {
         $scope.count++;
-        alert("INFO: ");
+        alert("Sua consulta, user1.");
     };
     $scope.types = ["Neurologista", "Cardiologista", "Oftalmologista", "Dermatologista"];
     $scope.mySub = function() {
-        alert("Requerimento enviado!");
+        alert("Solicitação de consulta enviada!");
     };
+}])
 
-}])</script>
+</script>
 <body ng-app='myApp' ng-controller='myCtrl'>
 
 <div>
 
-<p>Input something in the input box:</p>
-<p>Name : <input type="text" ng-model="name" placeholder="Enter name here"></p>
-<h1>Hello {{name}} + {{count}}</h1>
+<h1>Doctor Planning</h1>
+<h2>Bem vindo, {{name}}.</h2>
+
+<p>Para efetuar o agendamento da sua consulta da semana, selecione os campos abaixo.</p>
+<p>Os campos em amarelo já estão ocupados.</p>
 
 <p>Escolha a especialidade desejada:</p>
 <select ng-model="selectedType" ng-options="x for x in types">
@@ -57,7 +59,7 @@ angular.module('myApp', [])
 </div>
 
 <br/>
-<link rel="stylesheet" type="text/css" href="../styles/calendar.css">
+<link rel="stylesheet" type="text/css" href="calendar.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <table>
   <thead>
@@ -119,7 +121,7 @@ angular.module('myApp', [])
          {{selectedType}}
         </div>
       </td>
-      <td ng-class="{'selected': value1 == 2 && value2 == 2}" ng-click="myFunc()">
+      <td class="used" ng-click="myFunc()">
          <div ng-if="value1 == 2 && value2 == 2">
          {{selectedType}}
         </div>
@@ -141,7 +143,7 @@ angular.module('myApp', [])
     </tr>
     <tr>
       <td class="hour" rowspan="1"><span>11:00</span></td>
-      <td ng-class="{'selected': value1 == 1 && value2 == 3}" ng-click="myFunc()">
+      <td class="used" ng-click="myFunc()">
          <div ng-if="value1 == 1 && value2 == 3">
          {{selectedType}}
         </div>
@@ -222,7 +224,7 @@ angular.module('myApp', [])
          {{selectedType}}
         </div>
       </td>
-      <td ng-class="{'selected': value1 == 5 && value2 == 5}" ng-click="myFunc()">
+      <td class="used" ng-click="myFunc()">
          <div ng-if="value1 == 5 && value2 == 5">
          {{selectedType}}
         </div>
@@ -285,7 +287,7 @@ angular.module('myApp', [])
   </tbody>
 </table>
 
-<button ng-click="mySub()"> Submit </button>
+<button ng-click="mySub()"> Confirmar/Enviar </button>
 
 </body>
 </html>
