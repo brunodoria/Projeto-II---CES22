@@ -1,9 +1,9 @@
-import os
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-
-class Config(object):
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'app.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+DEBUG = False
+DATA_FOLTER = "data"
+USERS_DATA_FOLDER = "users"
+BASE_URL = "http://127.0.0.1:5000"
+MIN_YEAR = 2017
+MAX_YEAR = 2100
+PASSWORD_SALT = "something random and full of non-standard characters"
+HOST_IP = "0.0.0.0"  # set to None for production
+LOCALE = None

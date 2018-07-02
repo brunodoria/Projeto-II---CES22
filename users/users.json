@@ -1,0 +1,13 @@
+{
+    "a_username": {
+        "username": "a_username",
+        "password": "a_password",
+        "default_calendar": "sample"
+    },
+
+    "admin": {
+        "username": "admin",
+        "password": "b_password",
+        "default_calendar": "sample"
+    }
+}

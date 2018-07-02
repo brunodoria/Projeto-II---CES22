@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Doctor Planning</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
+  
+</head>
+<body>
+  <h1>Doctor Planning</h1>
+  <h2>Bem vindo !</h2>
+  <p>Faça o login abaixo</p>
+</br>
+    <form autocomplete="off" method="POST" action="{{ base_url }}/do_login">
+        <label for="text">Login</label>
+        <input type="text" autocomplete="off" placeholder="usuário" value="" id="username"
+            name="username"/>
+        <br/>
+
+        <label for="text">Senha</label>
+        <input type="password" autocomplete="off" placeholder="senha" value="" id="password"
+            name="password"/>
+        <br/>
+
+        <input type="submit" value="Entrar" />
+    </form>
+
+</body>
+</html>

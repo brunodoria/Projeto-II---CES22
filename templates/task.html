@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+      Doctor Planning
+    </title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
+
+</head>
+<body>
+
+    {% if editing %}
+        <form autocomplete="off" method="POST"
+            action="{{ base_url }}/{{ calendar_id }}/{{ year }}/{{ month }}/{{ day }}/task/{{ task.get("id") }}">
+    {% else %}
+        <form autocomplete="off" method="POST" action="{{ base_url }}/{{ calendar_id }}/new_task">
+    {% endif %}
+    <div id="task-details-form" class="task-details-form">
+
+        <p>Nossos serviços incluem: Neurologia, Cardiologia, Oftalmologia e Dermatologia, além da Clínica Médica.</p>
+        <label for="text">Especialidade</label>
+        <input type="text" autocomplete="off" tabindex="0" placeholder="---" value="{{ task.get("title", "") }}"
+            id="title" name="title" minlength="2" required />
+        <br/>
+        <br/>
+        <label for="date_picker">Data</label>
+        <input id="date_picker" type="date" value="{{ task["date"] }}">
+        <input type="hidden" id="date" name="date" value="{{ task["date"] }}" />
+        <br/>
+
+        <input type="hidden" id="is_all_day" name="is_all_day" value="0"
+            {% if task["is_all_day"] %}
+                checked="checked"
+            {% endif %}
+             />
+        <br/>
+
+        <div id="due_time_block">
+            <label for="due_time">Horário</label>
+            <input type="time" id="due_time" name="due_time" value="{{ task.get("due_time", "09:00") }}" />
+        </div>
+        <br/>
+
+        <input type="hidden" id="repeats" name="repeats" value="0"
+            {% if task["repeats"] %}
+                checked="checked"
+            {% endif %}
+            />
+        <div id="repetition_block"
+            {% if not task["repeats"] %}
+                class="hidden"
+            {% endif %}
+             >
+            <input type="radio" id="type_weekly" name="repetition_type" value="w"
+                {% if task.get("repetition_type") == "w" %}
+                    checked="checked"
+                {% endif %}
+                >
+            <label for="type_weekly">Occurs Weekly</label>
+            <input type="radio" id="type_monthly" name="repetition_type" value="m"
+                {% if task.get("repetition_type") == "m" %}
+                    checked="checked"
+                {% endif %}
+                >
+            <label for="type_monthly">Occurs Monthly</label>
+            <br/>
+
+            <input type="radio" id="subtype_weekly" name="repetition_subtype" value="w"
+                {% if task.get("repetition_subtype") == "w" %}
+                    checked="checked"
+                {% endif %}
+                >
+            <label for="subtype_weekly">Week day (0: monday → 6: sunday)</label>
+            <input type="radio" id="subtype_monthly" name="repetition_subtype" value="m"
+                {% if task.get("repetition_subtype") == "m" %}
+                    checked="checked"
+                {% endif %}
+                >
+            <label for="subtype_monthly">Month day</label>
+            <br/>
+
+            <label for="repetition_value">Value</label>
+            <input type="number" min="0" max="31" id="repetition_value" name="repetition_value"
+            value="{{ task.get("repetition_value", 0) }}" />
+        </div>
+        <br/>
+
+        <label for="details">NOME + Observações (alergias, medicamentos controlados, etc.):</label><br/>
+        <textarea id="details" name="details" placeholder="---" autocomplete="off" cols="40"
+            rows="5">{{ task["details"] }}</textarea>
+        <br/>
+
+        <label for="color">Cor do evento no calendário</label>
+        <input type="color" value="{{ task.get("color", "#53A93F") }}" id="color_custom" />
+        <input type="hidden" value="{{ task.get("color", "#53A93F") }}" id="color" name="color" />
+        <br/>
+
+        <input type="submit" value="Confirmar">
+        {% if editing %}
+            <input class="form-button delete-task" id="delete-task" type="button" value="Delete">
+        {% endif %}
+
+    </div>
+    </form>
+
+<script type="text/javascript">
+    window.onload = function() {
+        document.getElementById("is_all_day").onclick = function(eventData) {
+            if (eventData.target.checked == true) {
+                document.getElementById("due_time_block").className = "hidden";
+                document.getElementById("due_time").value ="00:00";
+            } else {
+                document.getElementById("due_time_block").className = "";
+            }
+        };
+
+        document.getElementById("repeats").onclick = function(eventData) {
+            if (eventData.target.checked == true) {
+                document.getElementById("type_weekly").checked = true;
+                document.getElementById("subtype_weekly").checked = true;
+                document.getElementById("repetition_value").value = 0;
+                document.getElementById("repetition_block").className = "";
+            } else {
+                document.getElementById("repetition_block").className = "hidden";
+              
+                document.getElementById("type_weekly").checked = true;
+                document.getElementById("type_weekly").checked = false;
+                document.getElementById("subtype_weekly").checked = true;
+                document.getElementById("subtype_weekly").checked = false;
+            }
+        };
+
+        document.getElementById("date_picker").onchange = function(eventData) {
+            document.getElementById("date").value = eventData.target.value;
+        };
+
+        document.getElementById("color_custom").onchange = function(eventData) {
+            document.getElementById("color").value = eventData.target.value;
+        };
+
+        document.getElementById("task-details-form").onclick = function(eventData) {
+            if (eventData.target.nodeName === "INPUT" && eventData.target.className === "form-button color") {
+                document.getElementById("color").value = eventData.target.getAttribute("data-color");
+                document.getElementById("color_custom").value = eventData.target.getAttribute("data-color");
+                return false;
+            } else {
+                return;
+            }
+        };
+
+        {% if editing %}
+            document.getElementById("delete-task").onclick = function() {
+                if (confirm("Remove task?") == true) {
+                    fetch("{{ base_url }}/{{ calendar_id }}/{{ year }}/{{ month }}/{{ day }}/{{ task.get("id") }}/",
+                      {
+                        method: "delete",
+                        credentials: "include"
+                      })
+                    .then(response => {
+                        if (response.status == 200) {
+                            window.location = "{{ base_url }}/{{ calendar_id }}/?y={{ year }}&m={{ month }}";
+                        }
+                    });
+                }
+            };
+        {% endif %}
+    }
+</script>
+</body>
+</html>
